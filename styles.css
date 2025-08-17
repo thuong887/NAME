@@ -1,0 +1,558 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Performance optimizations for in-app browsers */
+html {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+}
+
+/* Optimize animations for better performance */
+.falling-text,
+.heart,
+.sparkle,
+.particle,
+.falling-heart {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduce motion for devices that prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Optimize for low-end devices */
+@media (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 1) {
+    * {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .falling-text {
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.8) !important;
+        filter: none !important;
+    }
+
+    .heart,
+    .sparkle,
+    .particle {
+        filter: none !important;
+    }
+}
+
+body {
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(135deg, #ffb3d1, #ffc0cb, #ffcccb, #ffe4e1);
+    /* Start with lighter pink gradient */
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    height: 100vh;
+    overflow: hidden;
+    color: #fff;
+    cursor: pointer;
+    /* Performance optimizations */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.falling-text-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+
+.falling-text {
+    position: absolute;
+    font-size: 2.5rem;
+    font-weight: 900 !important;
+    /* Extra bold */
+    font-family: "Dancing Script", cursive !important;
+    color: white;
+    text-shadow:
+        0 0 15px rgba(0, 0, 0, 1),
+        0 2px 10px rgba(0, 0, 0, 0.9),
+        0 4px 20px rgba(0, 0, 0, 0.7),
+        0 0 10px rgba(255, 255, 255, 0.9);
+    white-space: nowrap !important;
+    word-wrap: normal !important;
+    word-break: normal !important;
+    max-width: 90vw;
+    text-align: center;
+    animation: fallDown linear;
+    transform-style: preserve-3d;
+    filter: brightness(1.3) contrast(1.4);
+    line-height: 1.2;
+    padding: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.5);
+    /* Add subtle stroke for definition */
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(-200px) scale(0);
+        opacity: 0;
+    }
+
+    1% {
+        opacity: 1;
+        transform: translateY(-200px) scale(1);
+    }
+
+    100% {
+        transform: translateY(calc(100vh + 100px)) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes fallDownDesktop {
+    0% {
+        transform: translateX(-50%) translateY(-200px) scale(0);
+        opacity: 0;
+    }
+
+    1% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-200px) scale(1);
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(calc(100vh + 100px)) scale(1);
+        opacity: 0;
+    }
+}
+
+.hearts-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    background-color: #ff526f;
+    transform: rotate(45deg);
+    animation: float 6s ease-in-out infinite;
+    filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 82, 111, 0.8)) drop-shadow(0 0 20px rgba(255, 82, 111, 0.6));
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background-color: inherit;
+}
+
+.heart::before {
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.heart::after {
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes float {
+    0% {
+        transform: rotate(45deg) translateY(100vh) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        transform: rotate(45deg) translateY(90vh) rotate(36deg) scale(1);
+    }
+
+    90% {
+        opacity: 1;
+        transform: rotate(45deg) translateY(-10vh) rotate(324deg) scale(1);
+    }
+
+    100% {
+        transform: rotate(45deg) translateY(-20vh) rotate(360deg) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Falling hearts from top */
+.falling-heart {
+    position: absolute;
+    font-size: 2rem;
+    color: #ffffff;
+    animation: heartFall linear;
+    z-index: 5;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes heartFall {
+    0% {
+        transform: translateY(-50px) translateX(0px) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateY(25vh) translateX(var(--drift, 0px)) rotate(90deg) scale(1.1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(50vh) translateX(var(--drift, 0px)) rotate(180deg) scale(1.2);
+        opacity: 1;
+    }
+
+    75% {
+        transform: translateY(75vh) translateX(var(--drift, 0px)) rotate(270deg) scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) translateX(var(--drift, 0px)) rotate(360deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* Sparkle effect */
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out infinite;
+    filter: brightness(1.5) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Floating particles */
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    animation: particleFloat 4s ease-in-out infinite;
+    filter: brightness(1.3) drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) translateX(20px) scale(1);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateY(-10vh) translateX(-20px) scale(1);
+    }
+
+    100% {
+        transform: translateY(-20vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .falling-text {
+        font-size: 1.8rem;
+        font-weight: 900 !important;
+        font-family: "Dancing Script", cursive !important;
+        max-width: 90vw !important;
+        white-space: nowrap !important;
+        line-height: 1.2;
+        word-wrap: normal !important;
+        word-break: normal !important;
+        padding: 0 5px;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        animation: fallDownDesktop linear;
+        text-align: center;
+        box-sizing: border-box;
+        text-shadow:
+            0 0 12px rgba(0, 0, 0, 1),
+            0 2px 8px rgba(0, 0, 0, 0.9),
+            0 4px 16px rgba(0, 0, 0, 0.7),
+            0 0 6px rgba(255, 255, 255, 0.9) !important;
+        filter: brightness(1.4) contrast(1.5) !important;
+        -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .falling-text.long-text {
+        font-weight: 900 !important;
+        font-family: "Dancing Script", cursive !important;
+        max-width: 80vw !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        padding: 0 10px;
+        overflow: hidden !important;
+        text-overflow: unset !important;
+        line-height: 1.3;
+        animation: fallDownDesktop linear;
+        text-align: center;
+        max-height: 30vh !important;
+        text-shadow:
+            0 0 12px rgba(0, 0, 0, 1),
+            0 2px 8px rgba(0, 0, 0, 0.9),
+            0 4px 16px rgba(0, 0, 0, 0.7),
+            0 0 6px rgba(255, 255, 255, 0.9) !important;
+        filter: brightness(1.4) contrast(1.5) !important;
+        -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .falling-heart {
+        font-size: 1.5rem;
+    }
+
+    .heart {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .sparkle {
+        width: 3px;
+        height: 3px;
+    }
+
+    .particle {
+        width: 2px;
+        height: 2px;
+    }
+
+    body {
+        cursor: pointer;
+    }
+
+    .music-control {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        top: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .falling-text {
+        font-size: 1.5rem;
+        max-width: 90vw !important;
+        white-space: nowrap !important;
+        line-height: 1.1;
+        word-wrap: normal !important;
+        word-break: normal !important;
+        padding: 0 5px;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        animation: fallDownDesktop linear;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .falling-text.long-text {
+        max-width: 75vw !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        padding: 0 10px;
+        overflow: hidden !important;
+        text-overflow: unset !important;
+        line-height: 1.4;
+        animation: fallDownDesktop linear;
+        text-align: center;
+        max-height: 25vh !important;
+        /* Limit height for smaller screens */
+    }
+
+    .falling-heart {
+        font-size: 1.3rem;
+    }
+
+    .heart {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .sparkle {
+        width: 2px;
+        height: 2px;
+    }
+
+    .particle {
+        width: 1.5px;
+        height: 1.5px;
+    }
+}
+
+@media (max-width: 360px) {
+    .falling-text {
+        font-size: 1.3rem;
+        max-width: 85vw !important;
+        white-space: nowrap !important;
+        line-height: 1.0;
+        word-wrap: normal !important;
+        word-break: normal !important;
+        padding: 0 5px;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        animation: fallDownDesktop linear;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .falling-text.long-text {
+        max-width: 70vw !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        padding: 0 10px;
+        overflow: hidden !important;
+        text-overflow: unset !important;
+        line-height: 1.5;
+        animation: fallDownDesktop linear;
+        text-align: center;
+        max-height: 20vh !important;
+        /* Limit height for very small screens */
+    }
+
+    .falling-heart {
+        font-size: 1.2rem;
+    }
+
+    .heart {
+        width: 10px !important;
+        height: 10px !important;
+    }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+    .falling-text {
+        animation: fallDownDesktop linear;
+    }
+
+    body {
+        cursor: pointer;
+    }
+
+    .container {
+        cursor: pointer;
+    }
+}
+
+/* Music control button */
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.music-control:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.music-control:active {
+    transform: scale(0.95);
+}
+
+.music-control.muted {
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .music-control {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        top: 15px;
+        right: 15px;
+    }
+}

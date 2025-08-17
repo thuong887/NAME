@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Do you love me?</title>
+    <!-- Favicon - Heart icon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="hearts-container"></div>
+      <div class="falling-text-container"></div>
+      <!-- Audio element for background music -->
+      <audio id="backgroundMusic" loop preload="auto" autoplay muted>
+        <source
+          src="https://cdn.shopify.com/s/files/1/0757/9700/4572/files/MaiMaiBenNhau-NooPhuocThinh-3602531.mp3?v=1748453356"
+          type="audio/mpeg"
+        />
+        Your browser does not support the audio element.
+      </audio>
+      <!-- Music control button -->
+      <button id="musicToggle" class="music-control">🔊</button>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
